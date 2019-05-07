@@ -1,0 +1,101 @@
+{
+    "title": "Azure SQL Database",
+    "description": "Provides create, read, update and delete functionality for Azure SQL Database resources including servers, databases, elastic pools, recommendations, operations, and usage metrics.",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/azure.com/sql-queries/2014-04-01/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://management.azure.com/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "azure_auth": {
+                "label": "Azure Active Directory OAuth2 Flow",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "auth_uri": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "Queries_ListByDatabase": {
+            "main": "./lib/actions/Queries_ListByDatabase.js",
+            "title": "Gets a list of top queries by database.",
+            "description": "Gets a list of top queries by database.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Queries_ListByDatabase.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "QueryTexts_ListByQuery": {
+            "main": "./lib/actions/QueryTexts_ListByQuery.js",
+            "title": "Gets a query's text.",
+            "description": "Gets a query's text.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/QueryTexts_ListByQuery.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "QueryStatistics_ListByQuery": {
+            "main": "./lib/actions/QueryStatistics_ListByQuery.js",
+            "title": "Lists a query's statistics.",
+            "description": "Lists a query's statistics.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/QueryStatistics_ListByQuery.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}
